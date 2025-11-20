@@ -62,8 +62,8 @@ const Navbar = () => {
       </div>
       <div className="navbar-end gap-4">
         <Button>Sign In</Button>
-        <div className="hidden lg:block">
-          <Button>Be a rider</Button>
+        <div className="hidden lg:block ">
+          <Button className={"bg-primary"}>Be a rider</Button>
         </div>
 
         <div className="-ms-4">
