@@ -1,24 +1,34 @@
-import { Link, NavLink } from "react-router";
-import Circle from "../circle/Circle";
+import { NavLink } from "react-router";
+import Button from "../../shared/button/Button";
+import Circle from "../../shared/button/Circle";
 import Logo from "../logo/Logo";
 
 const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink>Home</NavLink>
+        <NavLink>Service</NavLink>
       </li>
       <li>
-        <NavLink>Home</NavLink>
+        <NavLink>Coverage</NavLink>
       </li>
       <li>
-        <NavLink>Home</NavLink>
+        <NavLink>About Us</NavLink>
+      </li>
+      <li>
+        <NavLink>Pricing</NavLink>
+      </li>
+      <li>
+        <NavLink>Blog</NavLink>
+      </li>
+      <li>
+        <NavLink>Contact</NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm rounded-xl p-4">
+    <div className="navbar bg-base-100 shadow-sm lg:px-8 lg:py-6 rounded-2xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -29,38 +39,36 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
+              {" "}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
-              />
+              />{" "}
             </svg>
           </div>
-
           <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            tabIndex="-1"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {links}
           </ul>
         </div>
-
-        <Link className="text-xl">
-          <Logo />
-        </Link>
+        <Logo />
       </div>
-
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+      <div className="navbar-end gap-4">
+        <Button>Sign In</Button>
+        <div className="hidden lg:block">
+          <Button>Be a rider</Button>
+        </div>
 
-      <div className="navbar-end flex items-center gap-4">
-        <a className="my-btn">Sign In</a>
-        <a className="my-btn primary">Be a rider</a>
-        <button className="-ms-4">
+        <div className="-ms-4">
           <Circle />
-        </button>
+        </div>
       </div>
     </div>
   );

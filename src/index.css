@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Urbanist", sans-serif;
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
-
-.my-btn {
-  @apply px-4 py-2 rounded-xl border hover:border-gray-300 border-gray-200 text-lg font-semibold cursor-pointer;
-}
 
 .primary {
   @apply bg-[#CAEB66];
