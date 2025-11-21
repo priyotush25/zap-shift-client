@@ -4,7 +4,7 @@ import Card from "../../shared/card.jsx/Card";
 
 const Merchant = () => {
   return (
-    <Card className={"mt-24 bg-secondary"}>
+    <Card className={"mt-24 bg-secondary lg:p-20"}>
       <div className="flex lg:flex-row items-center flex-col-reverse gap-5">
         <div className="space-y-4">
           <h1 className="text-5xl font-black text-white">
