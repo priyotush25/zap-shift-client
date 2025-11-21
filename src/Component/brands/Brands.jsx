@@ -28,9 +28,12 @@ const Brands = () => {
       />
       <div>
         <Marquee pauseOnHover>
-          <div className="flex gap-30 mt-10">
+          <div className="flex mt-10 w-full gap-8 md:gap-14 lg:gap-30">
             {brandsLogo.map((brand) => (
-              <img src={brand}></img>
+              <img
+                className="w-20 md:w-24 lg:w-28 object-contain"
+                src={brand}
+              ></img>
             ))}
           </div>
         </Marquee>
