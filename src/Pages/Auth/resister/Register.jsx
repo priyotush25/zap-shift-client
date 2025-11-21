@@ -1,31 +1,44 @@
+import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import Input from "../../../shared/field/Input";
 
 const Register = () => {
+
+    const { register, handleSubmit } = useForm()
+
+    const handleRegister = () => {
+        
+    }
+
     return (
         <div>
             <div>
                 <h1 className="text-4xl font-black">Create an Account</h1>
                 <p className="font-medium">Login with ZapShift</p>
             </div>
-            <form action="" className="min-w-sm space-y-4 mt-6">
+            <form action="" className="min-w-sm space-y-4 mt-6" handleSubmit={handleRegister}>
                 <div>
-                    <label className="block text-gray-600 text-xl font-semibold mb-1">Name</label>
-                    <input type="text" placeholder="Enter your name" className="w-full px-4 py-2 rounded-md border border-gray-400" />
+                    <Input name="name" label={"Name"} input={"text"} title={"Enter your name"} {...register("name")}></Input>
                 </div>
                 <div>
-                    <label className="block text-gray-600 text-xl font-semibold mb-1">Email</label>
-                    <input type="email" placeholder="Enter your email" className="w-full px-4 py-2 rounded-md border border-gray-400" />
+                    <Input label={"Email"} input={"email"} title={"Enter your email"} {...register("email")}></Input>
                 </div>
                 <div>
-                    <label className="block text-gray-600 text-xl font-semibold mb-1">Password</label>
-                    <input type="password" placeholder="Enter your password" className="w-full px-4 py-2 rounded-md border border-gray-400" />
+                    <Input label={"Password"} input={"password"} title={"Enter your password"} {...register("password")}></Input>
                 </div>
                 <div>
-                    <input type="submit" value={"Register"} className="w-full px-4 py-2 text-xl font-semibold rounded-md border border-gray-400 bg-primary" />
+                    <Input input={"submit"} value={"Register"} inputClass="bg-primary"></Input>
                 </div>
                 <div>
-                    <label className="block text-xl text-gray-500 font-medium mb-1 ">Already have an account?  <Link to={"/login"} className="text-amber-500">Login</Link> </label>
+
+                    <label>
+                        Already have an account?
+                        <Link to="/login" className="text-amber-500">
+                            Login
+                        </Link>
+                    </label>
+
                 </div>
                 <div>
                     <label className="block text-xl text-gray-500 font-medium mb-1 text-center">Or</label>
