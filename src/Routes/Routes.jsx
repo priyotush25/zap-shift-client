@@ -7,6 +7,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+
     children: [
       {
         path: "/",
@@ -15,6 +16,8 @@ export const router = createBrowserRouter([
       {
         path: "/coverage",
         element: <Coverage />,
+
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
     ],
   },
