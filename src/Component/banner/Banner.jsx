@@ -9,7 +9,7 @@ import Circle from "../../shared/button/Circle";
 
 const Banner = () => {
   return (
-    <div className="p-2 lg:p-10 overflow-hidden bg-white rounded-2xl lg:rounded-4xl relative">
+    <div className="p-2 lg:p-10 overflow-hidden bg-white rounded-2xl lg:rounded-4xl relative mt-6">
       <div className="absolute z-50 ml-20 mt-[400px]">
         <Button className={"bg-primary"}>Track Your Parcel</Button>
         <Circle />
