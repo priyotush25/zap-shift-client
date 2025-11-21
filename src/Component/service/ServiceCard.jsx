@@ -2,8 +2,6 @@ import serviceIcon from "../../assets/service.png";
 import Card from "../../shared/card.jsx/Card";
 
 const ServiceCard = ({ deliveryData }) => {
-  console.log(deliveryData.service);
-
   return (
     <>
       <Card
