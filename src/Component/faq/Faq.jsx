@@ -8,7 +8,7 @@ const faqData = fetch("/faqData.json").then((res) => res.json());
 
 const Faq = () => {
   return (
-    <Card className={"my-24 bg-transparent"}>
+    <Card className={"my-24 bg-transparent border-transparent"}>
       <Heading
         className={"flex flex-col items-center justify-center mb-10"}
         titleClass="text-center"
