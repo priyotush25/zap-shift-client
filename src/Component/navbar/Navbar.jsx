@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import Button from "../../shared/button/Button";
 import Circle from "../../shared/button/Circle";
 import Logo from "../logo/Logo";
@@ -61,7 +61,10 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-4">
-        <Button>Sign In</Button>
+        <Link to={"/login"}>
+          <Button>Sign In</Button>
+        </Link>
+
         <div className="hidden lg:block ">
           <Button className={"bg-primary"}>Be a rider</Button>
         </div>
