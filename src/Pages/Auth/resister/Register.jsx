@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 import useAuth from "../../../hook/useAuth";
 import Input from "../../../shared/field/Input";
 
@@ -10,10 +11,15 @@ const Register = () => {
     const { registerUser } = useAuth();
 
     const handleRegister = (data) => {
-        console.log(data);
+        console.log(data.photo[0]);
 
         registerUser(data.email, data.password)
-            .then(res => { console.log(res.user); reset() })
+            .then(res => {
+                console.log(res.user);
+                toast.success("Registration successfully")
+                reset();
+
+            })
             .catch(result => console.log(result.message))
 
     }
@@ -39,6 +45,23 @@ const Register = () => {
                     />
                     {errors.name && <p className="text-red-500">{errors.name.message}</p>}
                 </div>
+
+                {/* name input */}
+                <div>
+                    <Input
+                        name="photo"
+                        label="Photo"
+                        input="file"
+                        title="Enter your photo"
+                        inputClass="bg-gradient-to-r from-gray-300 to-transparent cursor-pointer"
+                        {...register("file", { required: "Photo is required" })}
+                    />
+                    {errors.file && <p className="text-red-500">{errors.file.message}</p>}
+                </div>
+
+
+
+
                 {/* email input */}
                 <div>
                     <Input
@@ -66,7 +89,7 @@ const Register = () => {
                     {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 </div>
                 <div>
-                    <Input input="submit" inputClass="bg-primary" />
+                    <Input input="submit" inputClass="bg-primary cursor-pointer" />
                 </div>
             </form>
 
