@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import useAuth from "../../../hook/useAuth";
 import Input from "../../../shared/field/Input";
+import SocialLogin from "../socialLogin/SocialLogin";
 
 const Login = () => {
 
@@ -69,10 +69,7 @@ const Login = () => {
                 <label to={"/"} className="block text-xl text-gray-500 font-medium mb-1 text-center">Or</label>
             </div>
             <div>
-                <button className="w-full px-4 py-2 text-xl font-semibold rounded-md border border-gray-400 bg-gray-300 flex items-center justify-center gap-2">
-                    <FcGoogle className="text-2xl" />
-                    Login with Google
-                </button>
+                <SocialLogin />
             </div>
 
         </div>
