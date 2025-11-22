@@ -1,41 +1,80 @@
+import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import useAuth from "../../../hook/useAuth";
+import Input from "../../../shared/field/Input";
 
 const Login = () => {
+
+    const { loginUser } = useAuth();
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+
+    const handleLogin = (data) => {
+        console.log(data);
+
+        loginUser(data.email, data.password)
+            .then(res => {
+                console.log(res.user);
+                reset()
+            })
+            .catch(err => console.log(err.message))
+
+    }
+
+
     return (
         <div>
             <div>
                 <h1 className="text-4xl font-black">Welcome Back</h1>
                 <p className="font-medium">Login with ZapShift</p>
             </div>
-            <form action="" className="min-w-sm space-y-4 mt-6">
+            <form onSubmit={handleSubmit(handleLogin)} className="min-w-sm space-y-4 mt-6">
+                {/* email */}
                 <div>
-                    <label className="block text-gray-600 text-xl font-semibold mb-1">Email</label>
-                    <input type="email" className="w-full px-4 py-2 rounded-md border border-gray-400" />
+                    <Input
+                        label={"Email"}
+                        type={"email"}
+                        title={"Enter your email"}
+                        {...register("email", { required: "Email is required" })}
+                    />
+                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                 </div>
+                {/* password */}
                 <div>
-                    <label className="block text-gray-600 text-xl font-semibold mb-1">Email</label>
-                    <input type="email" className="w-full px-4 py-2 rounded-md border border-gray-400" />
+                    <Input
+                        label={"Password"}
+                        type={"password"}
+                        title={"Enter your password"}
+                        {...register("password", { required: "Password is required" })}
+                    />
+                    {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 </div>
                 <div>
                     <Link to={"/"} className="block text-xl text-gray-500 font-medium mb-1 underline">Forget Password?</Link>
                 </div>
                 <div>
-                    <input type="submit" className="w-full px-4 py-2 text-xl font-semibold rounded-md border border-gray-400 bg-primary" />
-                </div>
-                <div>
-                    <label className="block text-xl text-gray-500 font-medium mb-1 ">Don’t have any account? <Link to={"/register"} className="text-amber-500">Register</Link> </label>
-                </div>
-                <div>
-                    <label to={"/"} className="block text-xl text-gray-500 font-medium mb-1 text-center">Or</label>
-                </div>
-                <div>
-                    <button className="w-full px-4 py-2 text-xl font-semibold rounded-md border border-gray-400 bg-gray-300 flex items-center justify-center gap-2">
-                        <FcGoogle className="text-2xl" />
-                        Login with Google
-                    </button>
+                    <Input
+                        type={"submit"}
+                        inputClass="bg-primary"
+                    />
                 </div>
             </form>
+
+
+            <div>
+                <label className="block mt-4 text-xl text-gray-500 font-medium mb-1 ">Don’t have any account? <Link to={"/register"} className="text-amber-500">Register</Link> </label>
+            </div>
+            <div>
+                <label to={"/"} className="block text-xl text-gray-500 font-medium mb-1 text-center">Or</label>
+            </div>
+            <div>
+                <button className="w-full px-4 py-2 text-xl font-semibold rounded-md border border-gray-400 bg-gray-300 flex items-center justify-center gap-2">
+                    <FcGoogle className="text-2xl" />
+                    Login with Google
+                </button>
+            </div>
+
         </div>
     );
 };
