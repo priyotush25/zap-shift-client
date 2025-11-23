@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
@@ -8,15 +9,43 @@ import Input from "../../../shared/field/Input";
 const Register = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const { registerUser } = useAuth();
+    const { registerUser, updateUserProfile } = useAuth();
 
     const handleRegister = (data) => {
+
         console.log(data.photo[0]);
 
         registerUser(data.email, data.password)
             .then(res => {
-                console.log(res.user);
+
                 toast.success("Registration successfully")
+                console.log(res.user);
+
+
+                // store image to imgbb
+                const formData = new FormData();
+                formData.append("image", data.photo[0])
+
+                const img_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGEBB_API_KEY}`
+
+                axios.post(img_API_URL, formData)
+                    .then(res => {
+
+                        // update user profile
+                        const userProfile = {
+                            displayName: data.name,
+                            photoURL: res.data.data.display_url
+                        }
+
+                        updateUserProfile(userProfile)
+                            .then(() => {
+                                console.log("user update successfully");
+                            })
+                            .catch(error => console.log(error))
+
+                    })
+
+
                 reset();
 
             })
@@ -47,16 +76,16 @@ const Register = () => {
                 </div>
 
                 {/* name input */}
-                <div>
+                <div className="file_input">
                     <Input
                         name="photo"
                         label="Photo"
                         input="file"
                         title="Enter your photo"
                         inputClass="bg-gradient-to-r from-gray-300 to-transparent cursor-pointer"
-                        {...register("file", { required: "Photo is required" })}
+                        {...register("photo", { required: "Photo is required" })}
                     />
-                    {errors.file && <p className="text-red-500">{errors.file.message}</p>}
+                    {errors.photo && <p className="text-red-500">{errors.photo.message}</p>}
                 </div>
 
 
