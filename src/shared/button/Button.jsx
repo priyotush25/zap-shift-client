@@ -1,8 +1,8 @@
-const Button = ({ children, className }) => {
+const Button = ({ children, className, type }) => {
   return (
-    <div className={`${className} btn btn-lg rounded-xl text-black`}>
+    <button type={type} className={`${className} btn btn-lg rounded-xl text-black`}>
       {children}
-    </div>
+    </button>
   );
 };
 
