@@ -1,7 +1,11 @@
 import { FcGoogle } from "react-icons/fc";
+import { useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hook/useAuth";
 
 const SocialLogin = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
 
 
     const { signInGoogle } = useAuth();
@@ -11,6 +15,7 @@ const SocialLogin = () => {
         signInGoogle()
             .then(res => {
                 console.log(res.user);
+                navigate(location.state)
             })
             .catch(error => {
                 console.log(error.message);

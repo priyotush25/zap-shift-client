@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hook/useAuth";
 import Input from "../../../shared/field/Input";
 import SocialLogin from "../socialLogin/SocialLogin";
@@ -7,15 +7,19 @@ import SocialLogin from "../socialLogin/SocialLogin";
 const Login = () => {
 
     const { loginUser } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
     const handleLogin = (data) => {
+
         console.log(data);
 
         loginUser(data.email, data.password)
             .then(res => {
                 console.log(res.user);
+                navigate(location?.state || "/")
                 reset()
             })
             .catch(err => console.log(err.message))
@@ -63,7 +67,7 @@ const Login = () => {
 
 
             <div>
-                <label className="block mt-4 text-xl text-gray-500 font-medium mb-1 ">Don’t have any account? <Link to={"/register"} className="text-amber-500">Register</Link> </label>
+                <label className="block mt-4 text-xl text-gray-500 font-medium mb-1 ">Don’t have any account? <Link state={location.state} to={"/register"} className="text-amber-500">Register</Link> </label>
             </div>
             <div>
                 <label to={"/"} className="block text-xl text-gray-500 font-medium mb-1 text-center">Or</label>

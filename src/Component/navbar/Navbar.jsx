@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const { user, logOut } = useAuth();
 
-  console.log(user);
+
 
   const handleLogout = () => {
     logOut()
@@ -85,9 +85,9 @@ const Navbar = () => {
           </Link>
         }
 
-        <div className="hidden lg:block ">
+        <Link to={"/rider"} className="hidden lg:block ">
           <Button className={"bg-primary"}>Be a rider</Button>
-        </div>
+        </Link>
 
         <div className="-ms-4">
           <Circle />

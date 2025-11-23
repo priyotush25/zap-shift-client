@@ -1,15 +1,21 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../../../hook/useAuth";
 import Input from "../../../shared/field/Input";
 
 const Register = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
     const { registerUser, updateUserProfile } = useAuth();
+
+    const location = useLocation()
+    const navigate = useNavigate();
+
+
+
+
 
     const handleRegister = (data) => {
 
@@ -20,6 +26,7 @@ const Register = () => {
 
                 toast.success("Registration successfully")
                 console.log(res.user);
+
 
 
                 // store image to imgbb
@@ -40,6 +47,7 @@ const Register = () => {
                         updateUserProfile(userProfile)
                             .then(() => {
                                 console.log("user update successfully");
+                                navigate(location.state || "/")
                             })
                             .catch(error => console.log(error))
 

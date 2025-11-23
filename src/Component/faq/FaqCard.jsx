@@ -3,7 +3,7 @@ import { use } from "react";
 const FaqCard = ({ faqData }) => {
   const dataFaq = use(faqData);
   const faqAllData = dataFaq.faq;
-  console.log(dataFaq.faq);
+
 
   return (
     <div>
