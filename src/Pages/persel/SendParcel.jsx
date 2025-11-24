@@ -1,6 +1,7 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 import Button from "../../shared/button/Button";
 import Card from "../../shared/card.jsx/Card";
 import Input from "../../shared/field/Input";
@@ -15,7 +16,7 @@ const SendParcel = () => {
 
     const { handleSubmit, register, control, formState: { errors } } = useForm()
 
-
+    const axiosSecure = useAxiosSecure();
 
 
     const senderRegion = useWatch({ control, name: 'senderRegion' });
@@ -36,7 +37,7 @@ const SendParcel = () => {
 
         const isDocument = data.parcelType === "document";
         const isSameDistrict = data.senderDistrict === data.receiverDistrict;
-        console.log(isSameDistrict);
+
         const parcelWeight = parseFloat(data.parcelWeight)
         let cost = 0;
 
@@ -62,20 +63,28 @@ const SendParcel = () => {
 
 
         Swal.fire({
-            title: "Are you sure?",
-            text: `Total Cost : ${cost}`,
+            title: "Agree with the cost?",
+            text: `Total Cost : ${cost} Taka`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            cancelButtonText: "Cancel",
+            confirmButtonText: "I agree"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+
+
+                axiosSecure.post("/parcels", data)
+                    .then(res => {
+                        console.log("after saving parse : ", res.data);
+                    })
+
+                // Swal.fire({
+                //     title: "Deleted!",
+                //     text: "Your file has been deleted.",
+                //     icon: "success"
+                // });
             }
         });
 
@@ -83,7 +92,7 @@ const SendParcel = () => {
 
 
 
-        console.log(cost);
+
     }
 
 
@@ -98,7 +107,7 @@ const SendParcel = () => {
 
             <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
 
-                {/* document */}
+                {/* document types*/}
                 <div className="flex items-center gap-10 my-10">
 
                     <label className="flex items-center text-xl font-bold gap-3">
@@ -140,7 +149,7 @@ const SendParcel = () => {
                 </div>
 
 
-                {/* receive */}
+                {/* sender information  */}
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
                     <div className="flex-1">
                         <h1 className="text-2xl font-black text-gray-700 mb-5">Sender Details</h1>
@@ -149,6 +158,13 @@ const SendParcel = () => {
                             label={"Sender Name"}
                             inputClass="mb-4 w-full"
                             {...register("senderName")}
+                        />
+
+
+                        <Input
+                            label={"Sender Email"}
+                            inputClass="mb-4 w-full"
+                            {...register("senderEmail")}
                         />
 
 
@@ -194,6 +210,8 @@ const SendParcel = () => {
                         />
 
                     </div>
+
+                    {/* receiver information */}
                     <div className="flex-1">
                         <h1 className="text-2xl font-black text-gray-700 mb-5">Receiver Details</h1>
 
@@ -204,6 +222,12 @@ const SendParcel = () => {
                         />
 
 
+
+                        <Input
+                            label={"Receiver Email"}
+                            inputClass="mb-4 w-full"
+                            {...register("receiverEmail")}
+                        />
 
 
 
