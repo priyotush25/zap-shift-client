@@ -1,5 +1,6 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 import Button from "../../shared/button/Button";
 import Card from "../../shared/card.jsx/Card";
 import Input from "../../shared/field/Input";
@@ -14,15 +15,11 @@ const SendParcel = () => {
 
     const { handleSubmit, register, control, formState: { errors } } = useForm()
 
-    const handleFormSubmit = (data) => {
-        console.log(data);
-
-    }
 
 
 
     const senderRegion = useWatch({ control, name: 'senderRegion' });
-
+    const receiverRegion = useWatch({ control, name: 'receiverRegion' });
 
 
     // district by region
@@ -32,6 +29,63 @@ const SendParcel = () => {
 
         return districts;
     }
+
+
+    const handleFormSubmit = (data) => {
+        console.log(data);
+
+        const isDocument = data.parcelType === "document";
+        const isSameDistrict = data.senderDistrict === data.receiverDistrict;
+        console.log(isSameDistrict);
+        const parcelWeight = parseFloat(data.parcelWeight)
+        let cost = 0;
+
+
+        if (isDocument) {
+            cost = isSameDistrict ? 60 : 80;
+        } else {
+            if (parcelWeight < 3) {
+                cost = isSameDistrict ? 110 : 150;
+            } else {
+                const minCharge = isSameDistrict ? 110 : 150;
+                const extraWeight = parcelWeight - 3;
+                const extraCharge = isSameDistrict ? extraWeight * 40 : extraWeight * 40 + 40;
+
+                cost = minCharge + extraCharge;
+            }
+        }
+
+
+
+
+
+
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Total Cost : ${cost}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
+
+
+
+
+        console.log(cost);
+    }
+
 
 
 
@@ -74,7 +128,7 @@ const SendParcel = () => {
                     <div className="flex-1" >
                         <Input
                             label="Parcel Name"
-                            {...register("ParcelName")}
+                            {...register("parcelName")}
                         />
                     </div>
                     <div className="flex-1" >
@@ -94,17 +148,17 @@ const SendParcel = () => {
                         <Input
                             label={"Sender Name"}
                             inputClass="mb-4 w-full"
-                            {...register("SenderName")}
+                            {...register("senderName")}
                         />
 
 
                         <Input
                             label={"Sender Phone No"}
                             inputClass="mb-4"
-                            {...register("SenderNumber")}
+                            {...register("senderNumber")}
                         />
 
-                        {/* sender district */}
+                        {/* sender region */}
                         <fieldset className="fieldset mb-4">
                             <legend className="block text-gray-600 text-xl font-semibold mb-1">Sender Region</legend>
 
@@ -123,7 +177,7 @@ const SendParcel = () => {
                             <legend className="block text-gray-600 text-xl font-semibold mb-1">Sender District</legend>
 
 
-                            <select {...register("SenderDistrict")} defaultValue="Pick a District" className="select text-lg font-medium">
+                            <select {...register("senderDistrict")} defaultValue="Pick a District" className="select text-lg font-medium">
 
                                 {
                                     districtByRegion(senderRegion).map((d, idx) => <option key={idx} value={d}>{d}</option>)
@@ -146,29 +200,50 @@ const SendParcel = () => {
                         <Input
                             label={"Receiver Name"}
                             inputClass="mb-4"
-                            {...register("ReceiverName")}
+                            {...register("receiverName")}
                         />
 
 
-                        <Input
-                            label={"Receiver Address"}
-                            inputClass="mb-4"
-                            {...register("ReceiverAddress")}
-                        />
+
 
 
                         <Input
                             label={"Receiver Contact No"}
                             inputClass="mb-4"
-                            {...register("ReceiverNumber")}
+                            {...register("receiverNumber")}
                         />
 
 
-                        <Input
-                            label={"Receiver District"}
-                            inputClass="mb-4"
-                            {...register("ReceiverDistrict")}
-                        />
+                        {/* receiver region */}
+                        <fieldset className="fieldset mb-4">
+                            <legend className="block text-gray-600 text-xl font-semibold mb-1">Receiver Region</legend>
+
+
+                            <select {...register("receiverRegion")} defaultValue="Pick a Region" className="select text-lg font-medium">
+
+                                {
+                                    region.map((region, idx) => <option key={idx} value={region}> {region}</option>)
+                                }
+                            </select>
+                        </fieldset>
+
+
+                        {/* receiver district */}
+                        <fieldset className="fieldset mb-4">
+                            <legend className="block text-gray-600 text-xl font-semibold mb-1">Receiver District</legend>
+
+
+                            <select {...register("receiverDistrict")} defaultValue="Pick a District" className="select text-lg font-medium">
+
+                                {
+                                    districtByRegion(receiverRegion).map((d, idx) => <option key={idx} value={d}>{d}</option>)
+                                }
+                            </select>
+                        </fieldset>
+
+
+
+
 
                         <Input
                             label={"Pickup Instruction"}
