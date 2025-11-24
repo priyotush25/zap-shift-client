@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import AuthLayout from "../Layout/AuthLayout";
+import DashboardLayout from "../Layout/DashboardLayout";
 import MainLayout from "../Layout/MainLayout";
 import Login from "../Pages/Auth/login/Login";
 import Register from "../Pages/Auth/resister/Register";
 import Rider from "../Pages/Auth/Rider";
 import Coverage from "../Pages/coverage/Coverage";
+import MyParcel from "../Pages/dashboard/MyParcel/MyParcel";
 import Home from "../Pages/home/Home";
 import SendParcel from "../Pages/persel/SendParcel";
 import PrivateRoute from "./PrivateRoute";
@@ -52,4 +54,16 @@ export const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: "dashboard",
+    element: <PrivateRoute>
+      <DashboardLayout />
+    </PrivateRoute>,
+    children: [
+      {
+        path: "my-parcel",
+        element: <MyParcel />
+      }
+    ]
+  }
 ]);

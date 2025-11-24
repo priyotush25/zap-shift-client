@@ -31,15 +31,17 @@ const Navbar = () => {
       <li>
         <NavLink to={"/send-parcel"}>Send Parcel</NavLink>
       </li>
-      <li>
-        <NavLink>Pricing</NavLink>
-      </li>
-      <li>
-        <NavLink>Blog</NavLink>
-      </li>
-      <li>
-        <NavLink>Contact</NavLink>
-      </li>
+
+
+      {
+        user && <>
+          <li>
+            <NavLink to={"dashboard/my-parcel"}>My-Parcel</NavLink>
+          </li>
+
+        </>
+      }
+
     </>
   );
 
