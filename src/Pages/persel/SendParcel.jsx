@@ -59,12 +59,6 @@ const SendParcel = () => {
             }
         }
 
-
-
-
-
-
-
         Swal.fire({
             title: "Agree with the cost?",
             text: `Total Cost : ${cost} Taka`,
@@ -91,10 +85,7 @@ const SendParcel = () => {
             }
         });
 
-
-
-
-
+        data.cost = cost;
 
     }
 
