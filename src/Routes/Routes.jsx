@@ -7,9 +7,12 @@ import Register from "../Pages/Auth/resister/Register";
 import Rider from "../Pages/Auth/Rider";
 import Coverage from "../Pages/coverage/Coverage";
 import MyParcel from "../Pages/dashboard/MyParcel/MyParcel";
+import Payment from "../Pages/dashboard/payment/Payment";
 import Home from "../Pages/home/Home";
 import SendParcel from "../Pages/persel/SendParcel";
 import PrivateRoute from "./PrivateRoute";
+import PaymentSuccess from "../Pages/dashboard/payment/PaymentSuccess";
+import PaymentCancelled from "../Pages/dashboard/payment/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +66,17 @@ export const router = createBrowserRouter([
       {
         path: "my-parcel",
         element: <MyParcel />
+      },
+      {
+        path: "payment/:parcelId",
+        element: <Payment />
+      },{
+        path: "payment-success",
+        element: <PaymentSuccess/>
+      },
+      {
+        path: "payment-cancelled",
+        element: <PaymentCancelled/>
       }
     ]
   }
